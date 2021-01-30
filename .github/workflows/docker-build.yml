@@ -1,0 +1,11 @@
+name: docker-build
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Building and running rocker containers
+        run: docker-compose up -d
