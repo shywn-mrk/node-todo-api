@@ -10,5 +10,5 @@ jobs:
       - name: Checkout
         uses: actions/checkout@master
         
-      - name: Building and running rocker containers
+      - name: Building and running Docker containers
         run: docker-compose up -d
