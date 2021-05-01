@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const morgan = require('morgan')
 require('dotenv').config()
 
-const todosRouter = require('./routes/todos')
+const apiRouter = require('./routes/api')
 
 const app = express()
 
@@ -25,7 +25,7 @@ app.use(morgan('combined'))
 
 app.use(express.json())
 
-app.use('/todos', todosRouter)
+app.use('/api', apiRouter)
 
 const PORT = process.env.PORT || 5000
 const HOST = '0.0.0.0'
