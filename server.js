@@ -1,6 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
-const bodyParser = require('body-parser')
+const morgan = require('morgan')
 require('dotenv').config()
 
 const todosRouter = require('./routes/todos')
@@ -21,15 +21,9 @@ mongoose
         console.error('Connection Error: ', error.message)
     })
 
-// parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }))
- 
-// parse application/json
-app.use(bodyParser.json())
+app.use(morgan('combined'))
 
-app.get('/', (req, res) => {
-    res.send('Hello World!')
-})
+app.use(express.json())
 
 app.use('/todos', todosRouter)
 

@@ -12,11 +12,12 @@ const addTodo = async (req, res) => {
 
     res.json(todo)
   } else {
-    res.status(400)
-    res.json({
-      success: false,
-      msg: 'Invalid credentials'
-    })
+    res
+      .status(400)
+      .json({
+        success: false,
+        msg: 'Invalid credentials'
+      })
   }
 }
 
@@ -28,11 +29,12 @@ const getTodo = async (req, res) => {
   if (response) {
     res.json(response)
   } else {
-    res.status(404)
-    res.json({
-      success: false,
-      msg: 'Not Found'
-    })
+    res
+      .status(404)
+      .json({
+        success: false,
+        msg: 'Not Found'
+      })
   }
 }
 
@@ -58,11 +60,12 @@ const updateTodo = async (req, res) => {
   const todo = await Todos.findOne({ _id: id })
 
   if (!todo) {
-    res.status(404)
-    res.json({
-      success: false,
-      msg: 'Not Found'
-    })
+    res
+      .status(404)
+      .json({
+        success: false,
+        msg: 'Not Found'
+      })
   } else if (text !== undefined && completed !== undefined) {
     await todo.update({
       text,
@@ -71,11 +74,12 @@ const updateTodo = async (req, res) => {
 
     res.json(todo)
   } else {
-    res.status(400)
-    res.json({
-      success: false,
-      msg: 'Invalid credentials'
-    })
+    res
+      .status(400)
+      .json({
+        success: false,
+        msg: 'Invalid credentials'
+      })
   }
 }
 
@@ -84,7 +88,9 @@ const deleteTodo = async (req, res) => {
 
   await Todos.deleteOne({ _id: id})
 
-  res.send().status(200)
+  res
+    .send()
+    .status(200)
 }
 
 module.exports = { getTodos, addTodo, getTodo, updateTodo, deleteTodo }
