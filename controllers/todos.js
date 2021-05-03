@@ -1,40 +1,30 @@
+const { update } = require('../models/todo')
 const Todos = require('../models/todo')
+const schemaValidator = require('../models/validation/todo')
 
-const addTodo = async (req, res) => {
-  const { text, completed } = req.body
-
-  if (text !== undefined && completed !== undefined) {
-    const todo = new Todos({
-      text,
-      completed
-    })
-    todo.save()
+const addTodo = async (req, res, next) => {
+  try {
+    const validatedData = await schemaValidator.validateAsync(req.body)
+    const todo = new Todos(validatedData)
+    await todo.save()
 
     res.json(todo)
-  } else {
-    res
-      .status(400)
-      .json({
-        success: false,
-        msg: 'Invalid credentials'
-      })
+  } catch (error) {
+    next(error)
   }
 }
 
-const getTodo = async (req, res) => {
-  const { id } = req.params
+const getTodo = async (req, res, next) => {
+  try {
+    const { id } = req.params
+  
+    const response = await Todos.findOne({ _id: id })
 
-  const response = await Todos.findOne({ _id: id })
+    if (!response) return next()
 
-  if (response) {
     res.json(response)
-  } else {
-    res
-      .status(404)
-      .json({
-        success: false,
-        msg: 'Not Found'
-      })
+  } catch (error) {
+    next(error)    
   }
 }
 
@@ -44,53 +34,40 @@ const getTodos = async (req, res) => {
 
     res.json(todos)
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        success: false,
-        msg: 'Something went wrong while getting todos'
-      })
+    next(error)
   }
 }
 
-const updateTodo = async (req, res) => {
-  const { id } = req.params
-  const { text, completed } = req.body
+const updateTodo = async (req, res, next) => {
+  try {
+    const { id } = req.params
 
-  const todo = await Todos.findOne({ _id: id })
+    const validatedData = await schemaValidator.validateAsync(req.body)
 
-  if (!todo) {
-    res
-      .status(404)
-      .json({
-        success: false,
-        msg: 'Not Found'
-      })
-  } else if (text !== undefined && completed !== undefined) {
-    await todo.update({
-      text,
-      completed
-    })
+    const todo = await Todos.findOne({ _id: id })
 
-    res.json(todo)
-  } else {
-    res
-      .status(400)
-      .json({
-        success: false,
-        msg: 'Invalid credentials'
-      })
+    if (!todo) return next()
+
+    await todo.update(validatedData)
+
+    res.json(validatedData)
+  } catch (error) {
+    next(error)  
   }
 }
 
 const deleteTodo = async (req, res) => {
-  const { id } = req.params
+  try {
+    const { id } = req.params
 
-  await Todos.deleteOne({ _id: id})
+    await Todos.deleteOne({ _id: id})
 
-  res
-    .send()
-    .status(200)
+    res
+      .send()
+      .status(200)
+  } catch (error) {
+    next(error)
+  }
 }
 
 module.exports = { getTodos, addTodo, getTodo, updateTodo, deleteTodo }
