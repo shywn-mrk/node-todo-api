@@ -1,6 +1,5 @@
-const { update } = require('../models/todo')
 const Todos = require('../models/todo')
-const schemaValidator = require('../models/validation/todo')
+const schemaValidator = require('../validations/todo')
 
 const addTodo = async (req, res, next) => {
   try {

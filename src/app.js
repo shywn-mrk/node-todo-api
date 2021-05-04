@@ -1,13 +1,9 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const morgan = require('morgan')
-require('dotenv').config()
+const notFound = require('./middlewares/notFound')
+const errorResponse = require('./middlewares/errorResponse')
 
-const apiRouter = require('./routes/api')
-
-const app = express()
-
-// DB connection
 mongoose
   .connect(
     'mongodb://mongo:27017/node-todo-api',
@@ -21,16 +17,17 @@ mongoose
     console.error('Connection Error: ', error.message)
   })
 
+const apiRouter = require('./routes/api')
+
+const app = express()
+
 app.use(morgan('combined'))
 
 app.use(express.json())
 
 app.use('/api', apiRouter)
 
-const PORT = process.env.PORT || 8000
-const HOST = '0.0.0.0'
+app.use(notFound)
+app.use(errorResponse)
 
-app.listen(PORT, HOST, () => {
-  console.log(`Server running on port ${PORT}`)
-  console.log(`Visit http://localhost:${PORT}`)
-})
+module.exports = app
