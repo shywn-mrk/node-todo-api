@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon -L src/server.js"
+    "start": "node src/server.js",
+    "dev": "nodemon -L src/server.js"
   },
   "author": "Shayan Karimi",
   "license": "MIT",

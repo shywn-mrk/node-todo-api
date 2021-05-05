@@ -5,7 +5,7 @@ services:
     container_name: web
     restart: always
     build: .
-    command: npm run start
+    command: npm run dev
     ports:
       - 8000:8000
     volumes:
