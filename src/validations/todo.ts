@@ -1,4 +1,4 @@
-const joi = require('joi')
+import joi from 'joi'
 
 const schema = joi.object({
   text: joi.string()
@@ -7,4 +7,4 @@ const schema = joi.object({
     .required()
 })
 
-module.exports = schema
+export default schema

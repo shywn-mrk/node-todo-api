@@ -1,12 +1,13 @@
 import express, {
-    Application,
-    Request,
-    Response
+  Application
 } from 'express'
 import mongoose from 'mongoose'
-// import morgan from 'morgan'
+
+import morgan from 'morgan'
 import notFound from './middlewares/notFound'
 import errorResponse from './middlewares/errorResponse'
+
+import apiRouter from './routes/api'
 
 mongoose
   .connect(
@@ -21,18 +22,13 @@ mongoose
     console.error('Connection Error: ', error.message)
   })
 
-// import apiRouter from './routes/api'
-
 const app: Application = express()
 
-// app.use(morgan('combined'))
+app.use(morgan('combined'))
 
 app.use(express.json())
 
-// app.use('/api', apiRouter)
-app.use('/', (req: Request, res: Response) => {
-    res.send("Hello")
-})
+app.use('/api', apiRouter)
 
 app.use(notFound)
 app.use(errorResponse)
