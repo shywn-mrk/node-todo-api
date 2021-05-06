@@ -1,8 +1,13 @@
-const express = require('express')
-const mongoose = require('mongoose')
-const morgan = require('morgan')
-const notFound = require('./middlewares/notFound')
-const errorResponse = require('./middlewares/errorResponse')
+import express, {
+  Application
+} from 'express'
+import mongoose from 'mongoose'
+
+import morgan from 'morgan'
+import notFound from './middlewares/notFound'
+import errorResponse from './middlewares/errorResponse'
+
+import apiRouter from './routes/api'
 
 mongoose
   .connect(
@@ -17,9 +22,7 @@ mongoose
     console.error('Connection Error: ', error.message)
   })
 
-const apiRouter = require('./routes/api')
-
-const app = express()
+const app: Application = express()
 
 app.use(morgan('combined'))
 
@@ -30,4 +33,4 @@ app.use('/api', apiRouter)
 app.use(notFound)
 app.use(errorResponse)
 
-module.exports = app
+export default app

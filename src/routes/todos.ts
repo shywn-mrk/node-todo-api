@@ -1,11 +1,13 @@
-const router = require('express').Router()
-const {
+import express, { Router } from 'express'
+import {
   addTodo,
   getTodo,
   getTodos,
   updateTodo,
   deleteTodo
-} = require('../controllers/todos')
+} from '../controllers/todos'
+
+const router: Router = express.Router()
 
 router
   .route('/')
@@ -18,4 +20,4 @@ router
   .put(updateTodo)
   .delete(deleteTodo)
 
-module.exports = router
+export default router
