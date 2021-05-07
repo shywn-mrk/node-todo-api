@@ -4,7 +4,7 @@ import {
   NextFunction
 } from 'express'
 
-import Todos from '../models/todo'
+import Todo from '../models/todo'
 import TodoInterface from '../interfaces/TodoInterface'
 import todoValidator from '../validations/todo'
 
@@ -16,7 +16,7 @@ const addTodo = async (
   try {
     const validatedData: TodoInterface = await todoValidator
       .validateAsync(req.body)
-    const todo = new Todos(validatedData)
+    const todo = new Todo(validatedData)
     await todo.save()
 
     res.json(todo)
@@ -33,7 +33,7 @@ const getTodo = async (
   try {
     const { id } = req.params
 
-    const response = await Todos.findOne({ _id: id })
+    const response = await Todo.findOne({ _id: id })
 
     if (!response) return next()
 
@@ -49,7 +49,7 @@ const getTodos = async (
   next: NextFunction
 ) => {
   try {
-    const todos = await Todos.find({})
+    const todos = await Todo.find({})
 
     res.json(todos)
   } catch (error) {
@@ -68,7 +68,7 @@ const updateTodo = async (
     const validatedData: TodoInterface = await todoValidator
       .validateAsync(req.body)
 
-    const todo = await Todos.findOne({ _id: id })
+    const todo = await Todo.findOne({ _id: id })
 
     if (!todo) return next()
 
@@ -88,7 +88,7 @@ const deleteTodo = async (
   try {
     const { id } = req.params
 
-    await Todos.deleteOne({ _id: id })
+    await Todo.deleteOne({ _id: id })
 
     res
       .send()

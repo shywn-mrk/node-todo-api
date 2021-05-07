@@ -1,6 +1,6 @@
 interface TodoInterface {
   text: string,
-  completed: string
+  completed: boolean
 }
 
 export default TodoInterface
