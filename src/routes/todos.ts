@@ -1,4 +1,5 @@
 import express, { Router } from 'express'
+
 import {
   addTodo,
   getTodo,
@@ -7,7 +8,11 @@ import {
   deleteTodo
 } from '../controllers/todos'
 
+import authorizeUser from '../middlewares/authorizeUser'
+
 const router: Router = express.Router()
+
+router.use(authorizeUser)
 
 router
   .route('/')

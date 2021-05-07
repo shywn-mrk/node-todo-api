@@ -4,7 +4,11 @@ import {
   NextFunction
 } from 'express'
 
-const notFound = (req: Request, res: Response, next: NextFunction) => {
+const notFound = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const error: any = new Error('Not found')
   error.status = 404
   next(error)
