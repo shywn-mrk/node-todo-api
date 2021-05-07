@@ -14,12 +14,12 @@ const authorizeUser = (
   try {
     const token: any = req.headers.authorization?.split(' ')[1]
     
-    const decoded = jwt.verify(token, 'Secret_KeY_nOT-fOUND@!');
+    const decoded = jwt.verify(token, process.env.SECRET_KEY as string);
+
+    // TODO: atach the user email to req obj
 
     next()
   } catch (error) {
-    console.log("You shall not pass")
-
     next(error)
   }
 }

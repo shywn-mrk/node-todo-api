@@ -13,7 +13,7 @@ import userValidator from '../validations/user'
 const generateToken = (email: string) => {
   return jwt.sign(
     { email },
-    'Secret_KeY_nOT-fOUND@!', // TODO: move the key to env
+    process.env.SECRET_KEY as string,
     { expiresIn: '2h' }
   )
 }
