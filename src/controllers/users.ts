@@ -5,18 +5,11 @@ import {
 } from 'express'
 
 import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
 
 import User from '../models/user'
 import userValidator from '../validations/user'
 
-const generateToken = (email: string) => {
-  return jwt.sign(
-    { email },
-    process.env.SECRET_KEY as string,
-    { expiresIn: '2h' }
-  )
-}
+import generateToken from '../utils/generateToken'
 
 const login = async (
   req: Request,
