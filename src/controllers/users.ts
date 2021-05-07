@@ -11,6 +11,8 @@ import userValidator from '../validations/user'
 
 import generateToken from '../utils/generateToken'
 
+import AuthResponse from '../interfaces/AuthResponse'
+
 const login = async (
   req: Request,
   res: Response,
@@ -31,10 +33,12 @@ const login = async (
       user.password,
       (error, result) => {
         if (result) {
-          res.json({
+          const response: AuthResponse = {
             email: validatedUser.email,
             token: generateToken(validatedUser.email)
-          })
+          }
+
+          res.json(response)
         } else {
           next(error)
         }
@@ -65,10 +69,12 @@ const signup = async (
   
           await newUser.save()
   
-          res.json({
+          const response: AuthResponse = {
             email: validatedUser.email,
             token: generateToken(validatedUser.email)
-          })
+          }
+
+          res.json(response)
         } catch (error) {
           if (error && error.code === 11000)
             error = new Error('User already exists')
