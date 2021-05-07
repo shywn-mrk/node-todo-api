@@ -1,14 +1,14 @@
 import express, { Router } from 'express'
 
 import {
-  auth,
-  register
-} from '../controllers/auth'
+  login,
+  signup
+} from '../controllers/users'
 
 const router: Router = express.Router()
 
-router.post("/", auth)
+router.post("/login", login)
 
-router.post("/register", register)
+router.post("/signup", signup)
 
 export default router

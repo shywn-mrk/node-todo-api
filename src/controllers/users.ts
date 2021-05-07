@@ -18,7 +18,7 @@ const generateToken = (email: string) => {
   )
 }
 
-const auth = async (
+const login = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -52,7 +52,7 @@ const auth = async (
   }
 }
 
-const register = async (
+const signup = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -64,17 +64,24 @@ const register = async (
       validatedUser.password,
       10,
       async (error, hashedPassword) => {
-        const newUser = new User({
-          email: validatedUser.email,
-          password: hashedPassword
-        })
+        try {
+          const newUser = new User({
+            email: validatedUser.email,
+            password: hashedPassword
+          })
+  
+          await newUser.save()
+  
+          res.json({
+            email: validatedUser.email,
+            token: generateToken(validatedUser.email)
+          })
+        } catch (error) {
+          if (error && error.code === 11000)
+            error = new Error('User already exists')
 
-        await newUser.save()
-
-        res.json({
-          email: validatedUser.email,
-          token: generateToken(validatedUser.email)
-        })
+          next(error)
+        }
       }
     )
   } catch (error) {
@@ -82,4 +89,4 @@ const register = async (
   }
 }
 
-export { auth, register }
+export { login , signup }
