@@ -2,7 +2,7 @@
   "name": "tutorial",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "dist/server.js",
   "scripts": {
     "start": "node -r dotenv/config dist/server.js",
     "dev": "nodemon -L -r dotenv/config src/server.ts",

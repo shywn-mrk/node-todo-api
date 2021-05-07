@@ -5,7 +5,7 @@ dotenv.config({
   path: '../.env'
 })
 
-const PORT: any = process.env.PORT || 8000
+const PORT: any = process.env.PORT || 5000
 const HOST: string = '0.0.0.0'
 
 app.listen(PORT, HOST, () => {
