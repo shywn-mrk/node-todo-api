@@ -11,7 +11,7 @@ import apiRouter from './routes/api'
 
 mongoose
   .connect(
-    'mongodb://mongo:27017/node-todo-api',
+    process.env.MONGO_URL as string,
     {
       useNewUrlParser: true,
       useUnifiedTopology: true
