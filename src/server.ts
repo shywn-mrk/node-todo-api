@@ -1,7 +1,9 @@
 import app from './app'
 import dotenv from 'dotenv'
 
-dotenv.config()
+dotenv.config({
+  path: '../.env'
+})
 
 const PORT: any = process.env.PORT || 8000
 const HOST: string = '0.0.0.0'

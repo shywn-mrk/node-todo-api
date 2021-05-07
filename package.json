@@ -4,8 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "node dist/server.js",
-    "dev": "nodemon -L src/server.ts",
+    "start": "node -r dotenv/config dist/server.js",
+    "dev": "nodemon -L -r dotenv/config src/server.ts",
     "build": "npx tsc -p ./"
   },
   "author": "Shayan Karimi",
