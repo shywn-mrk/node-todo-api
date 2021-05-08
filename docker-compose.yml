@@ -14,6 +14,9 @@ services:
       - mongo
     links:
       - mongo
+    networks:
+      - nginx-proxy
+      - default
 
   mongo:
     container_name: mongo
@@ -22,6 +25,24 @@ services:
       - 27017:27017
     volumes:
       - data:/data/db
+    networks:
+      - nginx-proxy
+      - default
+
+  nginx:
+    container_name: nginx
+    restart: always
+    build: ./nginx
+    ports:
+      - 80:80
+    depends_on:
+      - web
+    networks:
+      - nginx-proxy
+      - default
 
 volumes:
   data:
+
+networks:
+  nginx-proxy:
