@@ -1,4 +1,4 @@
-import express, { Router } from 'express'
+import { Router } from 'express'
 
 import UsersController from '../controllers/users'
 
@@ -7,7 +7,7 @@ class UsersRouter {
   private controller
 
   constructor(route: string, router: Router) {
-    this.router = express.Router()
+    this.router = Router()
     this.controller = new UsersController()
     
     this.router.post("/login", this.controller.login)

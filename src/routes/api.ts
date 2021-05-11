@@ -1,4 +1,4 @@
-import express, { Application, Router } from 'express'
+import { Application, Router } from 'express'
 
 import TodosRouter from './todos'
 import UsersRouter from './users'
@@ -7,7 +7,7 @@ class APIRouter {
   private router: Router
 
   constructor(route: string, app: Application) {
-    this.router = express.Router()
+    this.router = Router()
     
     new UsersRouter('/users', this.router)
     new TodosRouter('/todos', this.router)

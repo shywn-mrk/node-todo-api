@@ -1,4 +1,4 @@
-import express, { Router } from 'express'
+import { Router } from 'express'
 
 import TodosController from '../controllers/todos'
 
@@ -9,7 +9,7 @@ class TodosRouter {
   private controller
 
   constructor(route: string, router: Router) {
-    this.router = express.Router()
+    this.router = Router()
     this.controller = new TodosController()
     
     this.router.use(authorizeUser)
