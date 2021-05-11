@@ -1,11 +1,19 @@
-import express, { Router } from 'express'
+import express, { Application, Router } from 'express'
 
-import todosRouter from './todos'
-import usersRouter from './users'
+import TodosRouter from './todos'
+import UsersRouter from './users'
 
-const router: Router = express.Router()
+class APIRouter {
+  private router: Router
 
-router.use('/users', usersRouter)
-router.use('/todos', todosRouter)
+  constructor(route: string, app: Application) {
+    this.router = express.Router()
+    
+    new UsersRouter('/users', this.router)
+    new TodosRouter('/todos', this.router)
 
-export default router
+    app.use(route, this.router)
+  }
+}
+
+export default APIRouter

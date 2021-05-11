@@ -1,36 +1,39 @@
 import express, {
   Application
 } from 'express'
-import mongoose from 'mongoose'
+
+import DBConnection from './config/database'
 
 import morgan from 'morgan'
 import notFound from './middlewares/notFound'
 import errorResponse from './middlewares/errorResponse'
 
-import apiRouter from './routes/api'
+import APIRouter from './routes/api'
 
-mongoose
-  .connect(
-    process.env.MONGO_URL as string,
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    }
-  )
-  .then(() => console.log('Mongo Connected'))
-  .catch(error => {
-    console.error('Connection Error: ', error.message)
-  })
+class App {
+  private app: Application
 
-const app: Application = express()
+  constructor() {
+    new DBConnection()
 
-app.use(morgan('combined'))
+    this.app = express()
 
-app.use(express.json())
+    this.app.use(morgan('combined'))
 
-app.use('/api', apiRouter)
+    this.app.use(express.json())
 
-app.use(notFound)
-app.use(errorResponse)
+    new APIRouter('/api', this.app)
 
-export default app
+    this.app.use(notFound)
+    this.app.use(errorResponse)
+  }
+
+  public start = (port: any, host: string) => {
+    this.app.listen(port, host, () => {
+      console.log(`Server running on port ${port}`)
+      console.log(`Visit http://localhost:${port}`)
+    })
+  }
+}
+
+export default App

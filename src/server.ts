@@ -1,4 +1,4 @@
-import app from './app'
+import App from './app'
 import dotenv from 'dotenv'
 
 dotenv.config({
@@ -8,7 +8,8 @@ dotenv.config({
 const PORT: any = process.env.PORT || 5000
 const HOST: string = '0.0.0.0'
 
-app.listen(PORT, HOST, () => {
-  console.log(`Server running on port ${PORT}`)
-  console.log(`Visit http://localhost:${PORT}`)
-})
+const server = new App()
+
+server.start(PORT, HOST)
+
+export default server

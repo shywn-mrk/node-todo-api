@@ -1,28 +1,32 @@
 import express, { Router } from 'express'
 
-import {
-  addTodo,
-  getTodo,
-  getTodos,
-  updateTodo,
-  deleteTodo
-} from '../controllers/todos'
+import TodosController from '../controllers/todos'
 
 import authorizeUser from '../middlewares/authorizeUser'
 
-const router: Router = express.Router()
+class TodosRouter {
+  private router: Router
+  private controller
 
-router.use(authorizeUser)
+  constructor(route: string, router: Router) {
+    this.router = express.Router()
+    this.controller = new TodosController()
+    
+    this.router.use(authorizeUser)
+    
+    this.router
+      .route('/')
+      .get(this.controller.getTodos)
+      .post(this.controller.addTodo)
+    
+    this.router
+      .route('/:id')
+      .get(this.controller.getTodo)
+      .put(this.controller.updateTodo)
+      .delete(this.controller.deleteTodo)
 
-router
-  .route('/')
-  .get(getTodos)
-  .post(addTodo)
+    router.use(route, this.router)
+  }
+}
 
-router
-  .route('/:id')
-  .get(getTodo)
-  .put(updateTodo)
-  .delete(deleteTodo)
-
-export default router
+export default TodosRouter

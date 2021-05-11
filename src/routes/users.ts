@@ -1,14 +1,20 @@
 import express, { Router } from 'express'
 
-import {
-  login,
-  signup
-} from '../controllers/users'
+import UsersController from '../controllers/users'
 
-const router: Router = express.Router()
+class UsersRouter {
+  private router: Router
+  private controller
 
-router.post("/login", login)
+  constructor(route: string, router: Router) {
+    this.router = express.Router()
+    this.controller = new UsersController()
+    
+    this.router.post("/login", this.controller.login)
+    this.router.post("/signup", this.controller.signup)
 
-router.post("/signup", signup)
+    router.use(route, this.router)
+  }
+}
 
-export default router
+export default UsersRouter
