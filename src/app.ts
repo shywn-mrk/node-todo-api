@@ -8,6 +8,8 @@ import morgan from 'morgan'
 import notFound from './middlewares/notFound'
 import errorResponse from './middlewares/errorResponse'
 
+import passport from 'passport'
+
 import APIRouter from './routes/api'
 
 class App {
@@ -21,6 +23,17 @@ class App {
     this.app.use(morgan('combined'))
 
     this.app.use(express.json())
+
+    // this.app.use(passport.initialize())
+
+    this.app.get('/auth/google',
+      passport.authenticate('google', { scope: ['email', 'profile'] })
+    )
+    this.app.get('/auth/google/callback',
+      passport.authenticate( 'google', {
+        successRedirect: '/auth/google/success',
+        failureRedirect: '/auth/google/failure'
+    }))
 
     new APIRouter('/api', this.app)
 

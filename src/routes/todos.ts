@@ -3,6 +3,8 @@ import { Router } from 'express'
 import TodosController from '../controllers/todos'
 
 import authorizeUser from '../middlewares/authorizeUser'
+import passport from 'passport'
+import '../config/passport'
 
 class TodosRouter {
   private router: Router
@@ -12,7 +14,10 @@ class TodosRouter {
     this.router = Router()
     this.controller = new TodosController()
     
-    this.router.use(authorizeUser)
+    this.router.use(passport.authenticate(
+      'google',
+      {session: false}
+    ))
     
     this.router
       .route('/')
