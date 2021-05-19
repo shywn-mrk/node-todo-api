@@ -16,7 +16,7 @@ class TodosRouter {
     
     this.router.use(passport.authenticate(
       'google',
-      {session: false}
+      {session: false, scope: ['email', 'profile']}
     ))
     
     this.router

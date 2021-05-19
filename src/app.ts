@@ -24,16 +24,25 @@ class App {
 
     this.app.use(express.json())
 
-    // this.app.use(passport.initialize())
+    this.app.use(passport.initialize())
 
     this.app.get('/auth/google',
-      passport.authenticate('google', { scope: ['email', 'profile'] })
+      passport.authenticate('google', { scope: ['email', 'profile'], session: false })
     )
     this.app.get('/auth/google/callback',
       passport.authenticate( 'google', {
-        successRedirect: '/auth/google/success',
-        failureRedirect: '/auth/google/failure'
+        // successRedirect: '/auth/google/success',
+        // failureRedirect: '/auth/google/failure',
+        session: false,
     }))
+
+    this.app.get('/auth/google/success', (req, res) => {
+      res.json({message: "welcome!"})
+    })
+
+    this.app.get('/auth/google/failure', (req, res) => {
+      res.json({message: "failed!"})
+    })
 
     new APIRouter('/api', this.app)
 
