@@ -23,12 +23,10 @@ class UsersController {
       const validatedUser = await userValidator.validateAsync(req.body)
       const user: any = await User.findOne({ email: validatedUser.email })
   
-      const authError = new Error(
+      if (!user) return next(new Error(
         "Authentication credintials are not valid"
-      )
-  
-      if (!user) return next(authError)
-  
+      ))
+      
       bcrypt.compare(
         validatedUser.password,
         user.password,
