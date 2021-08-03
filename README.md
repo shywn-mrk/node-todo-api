@@ -11,7 +11,7 @@ Or you can [click here](https://github.com/shywn-mrk/node-todo-api/generate) to 
 You can run the project in 2 different environments:
 
 - Development:
-`docker-compose -f .\docker-compose.dev.yml up --build`
+`docker-compose -f ./docker-compose.dev.yml up --build`
 
 - Deployment:
 `docker-compose up --build`
