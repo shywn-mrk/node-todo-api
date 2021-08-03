@@ -8,13 +8,13 @@ You can clone the project using:
 Or you can [click here](https://github.com/shywn-mrk/node-todo-api/generate) to generate this template and add it to your GitHub repositories.
 
 ## Running The Project
-You can run the project in 2 diffrent environments:
+You can run the project in 2 different environments:
 
 - Development:
 `docker-compose -f .\docker-compose.dev.yml up --build`
 
-- Deplyment:
+- Deployment:
 `docker-compose up --build`
 
 ## Contributing
-You can find me on [twitter](https://twitter.com/shywn_mrk) or you can just create a pull request and I'll check.
+You can find me on [Twitter](https://twitter.com/shywn_mrk) or you can just create a pull request and I'll check.
