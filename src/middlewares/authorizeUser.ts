@@ -19,7 +19,8 @@ const authorizeUser = (
     req.user = decoded.email
 
     next()
-  } catch (error) {
+  } catch (error: any) {
+    error.status = 401
     next(error)
   }
 }
